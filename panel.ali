@@ -27,7 +27,7 @@ RV MAX_TASK_ENTRIES=1
 RV MAX_TASKS=1+
 RV MAX_ENTRY_QUEUE_LENGTH=1+
 
-U panel%b		panel.adb		006bb233 NE OO SU
+U panel%b		panel.adb		1b26054c NE OO SU
 W ada%s			ada.ads			ada.ali
 W ada.calendar%s	a-calend.adb		a-calend.ali
 Z ada.calendar.delays%s	a-caldel.adb		a-caldel.ali
@@ -78,7 +78,7 @@ D a-unccon.ads		20170908151217 0e9b276f ada.unchecked_conversion%s
 D interfac.ads		20180111085525 5ab55268 interfaces%s
 D i-c.ads		20170908151217 5421119b interfaces.c%s
 D i-cstrea.ads		20180111085525 e53d8b8e interfaces.c_streams%s
-D panel.adb		20190103122741 6d3cad4b panel%b
+D panel.adb		20190103123950 76711a34 panel%b
 D system.ads		20180111085525 4635ec04 system%s
 D s-atacco.ads		20180111085525 4c36d12f system.address_to_access_conversions%s
 D s-conca2.ads		20180111085525 02a0d7d0 system.concat_2%s
@@ -114,56 +114,58 @@ D s-unstyp.ads		20180111085525 34867c83 system.unsigned_types%s
 D s-wchcon.ads		20180111085525 1b7d22d2 system.wch_con%s
 X 1 ada.ads
 16K9*Ada 20e8 24|8r6 9r5 10r6 11r5 13r6 14r5 15r6 17r6 18r5 19r6 20r5 22r6
-. 23r5 96r9 98r20 118r23
+. 23r5 98r9 100r20 120r23
 X 2 a-calend.ads
-36K13*Calendar 395e17 24|13w10 14r9 98r24 118r27
-44I9*Time<213I9> 24|98r33 118r36
-58V13*Clock{44I9} 24|125s20 154s17
-102V14*"+"{44I9} 24|125s26 142s32 154s23 172s28
+36K13*Calendar 395e17 24|13w10 14r9 100r24 120r27
+44I9*Time<213I9> 24|100r33 120r36
+58V13*Clock{44I9} 24|127s20 164s17
+102V14*"+"{44I9} 24|127s26 152s32 164s23 186s28
 213I9 Time_Rep<long_long_integer>
 X 6 a-except.ads
 54K13*Exceptions 349e19 24|22w10 23r9
-72V13*Exception_Name{string} 24|178s18
-94V13*Exception_Message{string} 24|178s46
+72V13*Exception_Name{string} 24|192s18
+94V13*Exception_Message{string} 24|192s46
 X 8 a-flteio.ads
 20K13*Float_Text_IO[19|46] 24|10w10 11r9
 X 10 a-numeri.ads
-16K13*Numerics 32e17 24|15r10 96r13
+16K13*Numerics 32e17 24|15r10 98r13
 X 11 a-nuflra.ads
-41K22*Float_Random 74e30 24|15w19 96r22
+41K22*Float_Random 74e30 24|15w19 98r22
 X 14 a-string.ads
 16K13*Strings 35e16 24|17w10 18r9 19r10 20r9
 33n37*Both{33E9} 24|51r39 51r64
 X 15 a-strfix.ads
 18K21*Fixed 251e22 24|19w18 20r17
 195V13*Trim{string} 24|51s28 51s53
-243V14*"*"{string} 24|163s30 165s30 167s30 169s30
+243V14*"*"{string} 24|173s30 175s30 177s30 179s30 181s30 183s31
 X 18 a-textio.ads
 49K13*Text_IO 471e16 24|8w10 9r9
-223U14*Get_Immediate 24|187s5
+223U14*Get_Immediate 24|201s5
 242U14*Put 24|56s7 57s7 58s7 70s7 71s7 73s7 78s7
-263U14*Put_Line 24|177s9 178s9
+263U14*Put_Line 24|191s9 192s9
 X 19 a-tiflio.ads
 68U14*Put 24|72s7[8|20]
 X 24 panel.adb
-25U11*Panel 25b11 191l5 191t10
-27b3 Koniec{boolean} 171r17 190m3
+25U11*Panel 25b11 205l5 205t10
+27b3 Koniec{boolean} 185r17 204m3
 29E8 Atrybuty 29e74 32r57 38r37 45r32 53r57 66r37
-29n21 Czysty{29E8} 48r56 163r43 165r43 167r43 169r43
+29n21 Czysty{29E8} 48r56 173r43 175r43 177r43 179r43 181r43 183r44
 29n29 Jasny{29E8} 47r13
 29n36 Podkreslony{29E8} 47r33
-29n49 Negatyw{29E8} 47r59 164r52 166r57 168r57 170r61
+29n49 Negatyw{29E8} 47r59 174r52 176r57 178r57 180r61 182r57 184r58
 29n58 Migajacy{29E8} 48r13
 29n68 Szary{29E8} 32r69 38r49 48r36 53r69 66r49
-31w13 Ekran 43b18 83r7 84r7 85r7 86r7 87r7 88r7 91l7 91t12 163r7 164r7 165r7
-. 166r7 167r7 168r7 169r7 170r7 174r5 185r3
+31w13 Ekran 43b18 83r7 84r7 85r7 86r7 87r7 88r7 89r7 90r7 93l7 93t12 173r7
+. 174r7 175r7 176r7 177r7 178r7 179r7 180r7 181r7 182r7 183r7 184r7 188r5
+. 199r3
 32U15 Pisz_XY 32>23 32>25 32>38 32>49 53b15 59l9 59t16 84s13 85s13 86s13
-. 87s13 88s13 163s13 164s13 165s13 166s13 167s13 168s13 169s13 170s13 174s11
+. 87s13 88s13 89s13 90s13 173s13 174s13 175s13 176s13 177s13 178s13 179s13
+. 180s13 181s13 182s13 183s13 184s13 188s11
 32i23 X{positive} 53b23 57r19
 32i25 Y{positive} 53b25 57r21
 32a38 S{string} 53b38 57r26
-32e49 Atryb{29E8} 53b49 54r53 163r36 164r45 165r36 166r50 167r36 168r50 169r36
-. 170r54
+32e49 Atryb{29E8} 53b49 54r53 173r36 174r45 175r36 176r50 177r36 178r50 179r36
+. 180r54 181r36 182r50 183r37 184r51
 33U15 Pisz_Float_XY 33>29 33>32 34>29 35>29 36>29 37>29 38>29 61b15 74l9
 . 74t22
 33i29 X{positive} 61b29 71r19
@@ -174,7 +176,7 @@ X 24 panel.adb
 37i29 Exp{natural} 65b29 72r27
 38e29 Atryb{29E8} 66b29 68r57
 39U15 Czysc 76b15 79l9 79t14 83s13
-40U15 Tlo 81b15 89l9 89t12 185s9
+40U15 Tlo 81b15 91l9 91t12 199s9
 45V14 Atryb_Fun{string} 45>24 54s43 68s47
 45e24 Atryb{29E8} 46r13
 50V14 Esc_XY{string} 50>21 50>23 57s12 71s12
@@ -182,35 +184,35 @@ X 24 panel.adb
 50i23 Y{positive} 51r33
 54a7 Przed=54:41{string} 56r12
 68a7 Przed_Str=68:45{string} 70r12
-93t8 Przebieg 95b13 179l7 179t15
-98i5 Nastepny{2|44I9} 154m5 156r19 172m7 172r19
-99o5 Okres{duration} 172r30
-100o5 Przesuniecie{duration} 154r25
-102i5 IloscMrowek{integer} 123m7 123r22 164r28
-103i5 IloscMrowekJajko{integer} 124m7 124r27 132m11 132r31 166r28
-104i5 IloscMrowekLarwa{integer} 133m11 133r31 136m11 136r31 168r28
-105i5 IloscMrowekPoczwarka{integer} 137m11 137r35 170r28
-106i5 IloscMrowekImago{integer}
-107i5 IloscMrowekStara{integer}
-109E10 StanMrowki 109e63 117r14
-109n25 Jajko{109E10} 117r28
-109n32 Larwa{109E10} 134r19
-109n39 Poczwarka{109E10} 138r19
-109n50 Imago{109E10}
-109n57 Stara{109E10}
-111T15 Mrowka 113l9 113e15 115b15 144l9 144t15 149r31
-112Y13 Start 122b14 159s25
-116i7 Wiek{integer} 128m9 128r17 130r14
-117e7 Stan{109E10} 134m11 138m11
-118i7 NastepnyM{2|44I9} 125m7 127r21 142m9 142r22
-119o7 OkresM{duration} 142r34
-120o7 PrzesuniecieM{duration} 125r28
-146i5 MaksymalnaIloscMrowek{integer} 148r40 157r21
-148I13 Zakres{integer} 149r20
-149a5 Mrowki(111T15) 159r9
-151i5 Licznik{integer} 157r10 159r16 160m9 160r20
-176r12 E{6|63R9} 178r34 178r65
-181e3 Zn{character} 187m19 188r15
+95t8 Przebieg 97b13 193l7 193t15
+100i5 Nastepny{2|44I9} 164m5 166r19 186m7 186r19
+101o5 Okres{duration} 186r30
+102o5 Przesuniecie{duration} 164r25
+104i5 IloscMrowek{integer} 125m7 125r22 174r28
+105i5 IloscMrowekJajko{integer} 126m7 126r27 134m11 134r31 176r28
+106i5 IloscMrowekLarwa{integer} 135m11 135r31 138m11 138r31 178r28
+107i5 IloscMrowekPoczwarka{integer} 139m11 139r35 142m11 142r35 180r28
+108i5 IloscMrowekImago{integer} 143m11 143r31 146m11 146r31 182r28
+109i5 IloscMrowekStara{integer} 147m11 147r31 184r29
+111E10 StanMrowki 111e63 119r14
+111n25 Jajko{111E10} 119r28
+111n32 Larwa{111E10} 136r19
+111n39 Poczwarka{111E10} 140r19
+111n50 Imago{111E10} 144r19
+111n57 Stara{111E10} 148r19
+113T15 Mrowka 115l9 115e15 117b15 154l9 154t15 159r31
+114Y13 Start 124b14 169s25
+118i7 Wiek{integer} 130m9 130r17 132r14
+119e7 Stan{111E10} 136m11 140m11 144m11 148m11
+120i7 NastepnyM{2|44I9} 127m7 129r21 152m9 152r22
+121o7 OkresM{duration} 152r34
+122o7 PrzesuniecieM{duration} 127r28
+156i5 MaksymalnaIloscMrowek{integer} 158r40 167r21
+158I13 Zakres{integer} 159r20
+159a5 Mrowki(113T15) 169r9
+161i5 Licznik{integer} 167r10 169r16 170m9 170r20
+190r12 E{6|63R9} 192r34 192r65
+195e3 Zn{character} 201m19 202r15
 X 44 s-stausa.ads
 203U14*Initialize 204i<c,__gnat_stack_usage_initialize>22
 268U14*Output_Results 272i<c,__gnat_stack_usage_output_results>22

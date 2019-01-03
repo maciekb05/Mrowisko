@@ -86,6 +86,8 @@ procedure Panel is
       Ekran.Pisz_XY(3,6,"Ilość jajek =");
       Ekran.Pisz_XY(3,7,"Ilość larw =");
       Ekran.Pisz_XY(3,8,"Ilość poczwarek =");
+      Ekran.Pisz_XY(3,9,"Ilość imago =");
+      Ekran.Pisz_XY(3,10,"Ilość starych =");
     end Tlo; 
         
   end Ekran;
@@ -135,7 +137,15 @@ procedure Panel is
          when 4 => 
           IloscMrowekLarwa := IloscMrowekLarwa - 1;
           IloscMrowekPoczwarka := IloscMrowekPoczwarka + 1;
-          Stan := Poczwarka;  
+          Stan := Poczwarka;
+         when 8 => 
+          IloscMrowekPoczwarka := IloscMrowekPoczwarka - 1;
+          IloscMrowekImago := IloscMrowekImago + 1;
+          Stan := Imago;
+         when 16 => 
+          IloscMrowekImago := IloscMrowekImago - 1;
+          IloscMrowekStara := IloscMrowekStara + 1;
+          Stan := Stara; 
          when others => null; 
         end case;
 
@@ -168,6 +178,10 @@ procedure Panel is
       Ekran.Pisz_XY(21, 7, IloscMrowekLarwa'Img, Atryb=>Negatyw);
       Ekran.Pisz_XY(21 ,8, 20*' ', Atryb=>Czysty);
       Ekran.Pisz_XY(21, 8, IloscMrowekPoczwarka'Img, Atryb=>Negatyw);
+      Ekran.Pisz_XY(21 ,9, 20*' ', Atryb=>Czysty);
+      Ekran.Pisz_XY(21, 9, IloscMrowekImago'Img, Atryb=>Negatyw);
+      Ekran.Pisz_XY(21 ,10, 20*' ', Atryb=>Czysty);
+      Ekran.Pisz_XY(21, 10, IloscMrowekStara'Img, Atryb=>Negatyw);
       exit when Koniec;
       Nastepny := Nastepny + Okres;
     end loop; 
