@@ -1,0 +1,30 @@
+1. Tytuł: 
+    Mrowisko
+
+2. Dane studentów: 
+    Maciej Bielech, Agnieszka Zadworny, 3 rok, Informatyka, grupa 3a
+
+3. Data oddania: 
+
+4. Cel programu:  
+    Zobrazowanie cyklu dojrzewania mrówki, 
+    funkcjonowania czynności życiowych i
+    życia codziennego mrówek.
+
+5. Opis i schemat struktury zadaniowej programu
+
+6. Informacje o stosowanych pakietach zewnętrznych
+
+7. Informacje o zastosowaniu specyficznych metod rozwiązania problemu
+
+8. Krótka instrukcja obsługi
+
+9. Testy, przykłady
+
+10. Możliwe rozszerzenia programu
+    GUI
+
+11. Ograniczenia programu np. maksymalna liczba obsługiwanych plików, max. czas symulacji itp.
+
+12. Inne informacje zależne od tematu.
+
