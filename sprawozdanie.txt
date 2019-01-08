@@ -29,8 +29,6 @@
 
 10. Możliwe rozszerzenia programu
     GUI,
-    Dodawanie niestandardowych sytuacji: jak susza, czy powódź,
-    Zegar zliczający czas,
     Możliwość wpływu na parametry symulacji,
     Przyciski do przerywania i uruchamiania symulacji.
 

@@ -188,6 +188,101 @@ procedure Panel is
         end Sygnalizuj;
     end SemaforSpania;
 
+    protected SemaforIlosciPracujacych is
+        entry Czekaj;
+        procedure Sygnalizuj;
+    private
+        Sem : Boolean := True;
+    end SemaforIlosciPracujacych;
+
+    protected body SemaforIlosciPracujacych is
+        entry Czekaj when Sem is
+        begin
+            Sem := False;
+        end Czekaj;
+
+        procedure Sygnalizuj is
+        begin
+            Sem := True;
+        end Sygnalizuj;
+    end SemaforIlosciPracujacych;
+
+    protected SemaforIlosciSpiacych is
+        entry Czekaj;
+        procedure Sygnalizuj;
+    private
+        Sem : Boolean := True;
+    end SemaforIlosciSpiacych;
+
+    protected body SemaforIlosciSpiacych is
+        entry Czekaj when Sem is
+        begin
+            Sem := False;
+        end Czekaj;
+
+        procedure Sygnalizuj is
+        begin
+            Sem := True;
+        end Sygnalizuj;
+    end SemaforIlosciSpiacych;
+
+    protected SemaforIlosciJedzacych is
+        entry Czekaj;
+        procedure Sygnalizuj;
+    private
+        Sem : Boolean := True;
+    end SemaforIlosciJedzacych;
+
+    protected body SemaforIlosciJedzacych is
+        entry Czekaj when Sem is
+        begin
+            Sem := False;
+        end Czekaj;
+
+        procedure Sygnalizuj is
+        begin
+            Sem := True;
+        end Sygnalizuj;
+    end SemaforIlosciJedzacych;
+
+    protected SemaforIlosciCzekajacych is
+        entry Czekaj;
+        procedure Sygnalizuj;
+    private
+        Sem : Boolean := True;
+    end SemaforIlosciCzekajacych;
+
+    protected body SemaforIlosciCzekajacych is
+        entry Czekaj when Sem is
+        begin
+            Sem := False;
+        end Czekaj;
+
+        procedure Sygnalizuj is
+        begin
+            Sem := True;
+        end Sygnalizuj;
+    end SemaforIlosciCzekajacych;
+
+    protected SemaforIlosciRozmnazajacych is
+        entry Czekaj;
+        procedure Sygnalizuj;
+    private
+        Sem : Boolean := True;
+    end SemaforIlosciRozmnazajacych;
+
+    protected body SemaforIlosciRozmnazajacych is
+        entry Czekaj when Sem is
+        begin
+            Sem := False;
+        end Czekaj;
+
+        procedure Sygnalizuj is
+        begin
+            Sem := True;
+        end Sygnalizuj;
+    end SemaforIlosciRozmnazajacych;
+
 
     task type Mrowka is
       entry Start;	
@@ -214,11 +309,26 @@ procedure Panel is
 
       procedure PorzucPoprzedniaCzynnosc is begin
         case Czynnosc is
-          when Praca => IloscPracujacychMrowek := IloscPracujacychMrowek - 1;
-          when Jedzenie => IloscJedzacychMrowek := IloscJedzacychMrowek - 1;
-          when Spanie => IloscSpiacychMrowek := IloscSpiacychMrowek - 1;
-          when Czekanie => IloscCzekajacychMrowek := IloscCzekajacychMrowek - 1;
-          when SkadanieJaj => IloscSkladajacychJaja := IloscSkladajacychJaja - 1;
+          when Praca =>
+            SemaforIlosciPracujacych.Czekaj;
+            IloscPracujacychMrowek := IloscPracujacychMrowek - 1;
+            SemaforIlosciPracujacych.Sygnalizuj;
+          when Jedzenie => 
+            SemaforIlosciJedzacych.Czekaj;
+            IloscJedzacychMrowek := IloscJedzacychMrowek - 1;
+            SemaforIlosciJedzacych.Sygnalizuj;
+          when Spanie => 
+            SemaforIlosciSpiacych.Czekaj;
+            IloscSpiacychMrowek := IloscSpiacychMrowek - 1;
+            SemaforIlosciSpiacych.Sygnalizuj;
+          when Czekanie => 
+            SemaforIlosciCzekajacych.Czekaj;
+            IloscCzekajacychMrowek := IloscCzekajacychMrowek - 1;
+            SemaforIlosciCzekajacych.Sygnalizuj;
+          when SkadanieJaj => 
+            SemaforIlosciRozmnazajacych.Czekaj;
+            IloscSkladajacychJaja := IloscSkladajacychJaja - 1;
+            SemaforIlosciRozmnazajacych.Sygnalizuj;
         end case;
       end PorzucPoprzedniaCzynnosc;
 
@@ -227,7 +337,9 @@ procedure Panel is
       accept Start;
       IloscMrowek := IloscMrowek + 1;
       IloscMrowekJajko := IloscMrowekJajko + 1;
+      SemaforIlosciCzekajacych.Czekaj;
       IloscCzekajacychMrowek := IloscCzekajacychMrowek + 1;
+      SemaforIlosciCzekajacych.Sygnalizuj;
       NastepnyM := Clock + PrzesuniecieM;
       loop
         delay until NastepnyM;
@@ -324,20 +436,26 @@ procedure Panel is
             then
               PorzucPoprzedniaCzynnosc;
               Czynnosc := Czekanie;
+              SemaforIlosciCzekajacych.Czekaj;
               IloscCzekajacychMrowek := IloscCzekajacychMrowek + 1;
+              SemaforIlosciCzekajacych.Sygnalizuj;
               Energia := Energia - 3;
               PoziomNajedzenia := PoziomNajedzenia - 5;
             elsif Random(Gen) < 0.08 then
               PorzucPoprzedniaCzynnosc;
               Czynnosc := SkadanieJaj;
+              SemaforIlosciRozmnazajacych.Czekaj;
               IloscSkladajacychJaja := IloscSkladajacychJaja + 1;
+              SemaforIlosciRozmnazajacych.Sygnalizuj;
               Energia := Energia - 5;
               PoziomNajedzenia := PoziomNajedzenia - 10;
               Przebieg.NowaMrowka;
             else
               PorzucPoprzedniaCzynnosc;
               Czynnosc := Praca;
+              SemaforIlosciPracujacych.Czekaj;
               IloscPracujacychMrowek := IloscPracujacychMrowek + 1;
+              SemaforIlosciPracujacych.Sygnalizuj;
               Energia := Energia - CiezkoscPracy;
               PoziomNajedzenia := PoziomNajedzenia - 30;
               IloscJedzenia := IloscJedzenia + 3;
