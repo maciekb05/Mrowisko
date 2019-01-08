@@ -283,6 +283,138 @@ procedure Panel is
         end Sygnalizuj;
     end SemaforIlosciRozmnazajacych;
 
+    protected SemaforMrowek is
+        entry Czekaj;
+        procedure Sygnalizuj;
+    private
+        Sem : Boolean := True;
+    end SemaforMrowek;
+
+    protected body SemaforMrowek is
+        entry Czekaj when Sem is
+        begin
+            Sem := False;
+        end Czekaj;
+
+        procedure Sygnalizuj is
+        begin
+            Sem := True;
+        end Sygnalizuj;
+    end SemaforMrowek;
+
+    protected SemaforJajek is
+        entry Czekaj;
+        procedure Sygnalizuj;
+    private
+        Sem : Boolean := True;
+    end SemaforJajek;
+
+    protected body SemaforJajek is
+        entry Czekaj when Sem is
+        begin
+            Sem := False;
+        end Czekaj;
+
+        procedure Sygnalizuj is
+        begin
+            Sem := True;
+        end Sygnalizuj;
+    end SemaforJajek;
+
+    protected SemaforLarw is
+        entry Czekaj;
+        procedure Sygnalizuj;
+    private
+        Sem : Boolean := True;
+    end SemaforLarw;
+
+    protected body SemaforLarw is
+        entry Czekaj when Sem is
+        begin
+            Sem := False;
+        end Czekaj;
+
+        procedure Sygnalizuj is
+        begin
+            Sem := True;
+        end Sygnalizuj;
+    end SemaforLarw;
+
+    protected SemaforPoczwarek is
+        entry Czekaj;
+        procedure Sygnalizuj;
+    private
+        Sem : Boolean := True;
+    end SemaforPoczwarek;
+
+    protected body SemaforPoczwarek is
+        entry Czekaj when Sem is
+        begin
+            Sem := False;
+        end Czekaj;
+
+        procedure Sygnalizuj is
+        begin
+            Sem := True;
+        end Sygnalizuj;
+    end SemaforPoczwarek;
+
+    protected SemaforImago is
+        entry Czekaj;
+        procedure Sygnalizuj;
+    private
+        Sem : Boolean := True;
+    end SemaforImago;
+
+    protected body SemaforImago is
+        entry Czekaj when Sem is
+        begin
+            Sem := False;
+        end Czekaj;
+
+        procedure Sygnalizuj is
+        begin
+            Sem := True;
+        end Sygnalizuj;
+    end SemaforImago;
+    
+    protected SemaforStarych is
+        entry Czekaj;
+        procedure Sygnalizuj;
+    private
+        Sem : Boolean := True;
+    end SemaforStarych;
+
+    protected body SemaforStarych is
+        entry Czekaj when Sem is
+        begin
+            Sem := False;
+        end Czekaj;
+
+        procedure Sygnalizuj is
+        begin
+            Sem := True;
+        end Sygnalizuj;
+    end SemaforStarych;
+
+    protected SemaforTrupow is
+        entry Czekaj;
+        procedure Sygnalizuj;
+    private
+        Sem : Boolean := True;
+    end SemaforTrupow;
+
+    protected body SemaforTrupow is
+        entry Czekaj when Sem is
+        begin
+            Sem := False;
+        end Czekaj;
+
+        procedure Sygnalizuj is
+        begin
+            Sem := True;
+        end Sygnalizuj;
+    end SemaforTrupow;
 
     task type Mrowka is
       entry Start;	
@@ -335,8 +467,12 @@ procedure Panel is
     begin
       Reset(Gen);
       accept Start;
+      SemaforMrowek.Czekaj;
       IloscMrowek := IloscMrowek + 1;
+      SemaforMrowek.Sygnalizuj;
+      SemaforJajek.Czekaj;
       IloscMrowekJajko := IloscMrowekJajko + 1;
+      SemaforJajek.Sygnalizuj;
       SemaforIlosciCzekajacych.Czekaj;
       IloscCzekajacychMrowek := IloscCzekajacychMrowek + 1;
       SemaforIlosciCzekajacych.Sygnalizuj;
@@ -347,25 +483,47 @@ procedure Panel is
 
         case Wiek is
          when 2 =>
+          SemaforJajek.Czekaj;
           IloscMrowekJajko := IloscMrowekJajko - 1;
+          SemaforJajek.Sygnalizuj;
+          SemaforLarw.Czekaj;
           IloscMrowekLarwa := IloscMrowekLarwa + 1;
+          SemaforLarw.Sygnalizuj;
           Stan := Larwa;  
          when 4 => 
+          SemaforLarw.Czekaj;
           IloscMrowekLarwa := IloscMrowekLarwa - 1;
+          SemaforLarw.Sygnalizuj;
+          SemaforPoczwarek.Czekaj;
           IloscMrowekPoczwarka := IloscMrowekPoczwarka + 1;
+          SemaforPoczwarek.Sygnalizuj;
           Stan := Poczwarka;
          when 8 => 
+          SemaforPoczwarek.Czekaj;
           IloscMrowekPoczwarka := IloscMrowekPoczwarka - 1;
+          SemaforPoczwarek.Sygnalizuj;
+          SemaforImago.Czekaj;
           IloscMrowekImago := IloscMrowekImago + 1;
+          SemaforImago.Sygnalizuj;
           Stan := Imago;
          when 16 => 
+          SemaforImago.Czekaj;
           IloscMrowekImago := IloscMrowekImago - 1;
+          SemaforImago.Sygnalizuj;
+          SemaforStarych.Czekaj;
           IloscMrowekStara := IloscMrowekStara + 1;
+          SemaforStarych.Sygnalizuj;
           Stan := Stara;
          when 32 =>
+          SemaforMrowek.Czekaj;
           IloscMrowek := IloscMrowek - 1;
+          SemaforMrowek.Sygnalizuj;
+          SemaforStarych.Czekaj;
           IloscMrowekStara := IloscMrowekStara - 1;
+          SemaforStarych.Sygnalizuj;
+          SemaforTrupow.Czekaj;
           IloscTrupow := IloscTrupow + 1;
+          SemaforTrupow.Sygnalizuj;
           
           PorzucPoprzedniaCzynnosc;
 
@@ -379,13 +537,21 @@ procedure Panel is
 
           if PoziomNajedzenia <= 0 or else Energia <= 0
           then
+            SemaforMrowek.Czekaj;
             IloscMrowek := IloscMrowek - 1;
+            SemaforMrowek.Sygnalizuj;
+            SemaforTrupow.Czekaj;
             IloscTrupow := IloscTrupow + 1;
+            SemaforTrupow.Sygnalizuj;
             if Wiek >= 16
             then 
+              SemaforStarych.Czekaj;
               IloscMrowekStara := IloscMrowekStara - 1;
+              SemaforStarych.Sygnalizuj;
             else
+              SemaforImago.Czekaj;
               IloscMrowekImago := IloscMrowekImago - 1;
+              SemaforImago.Sygnalizuj;
             end if;
             PorzucPoprzedniaCzynnosc;
             exit;
