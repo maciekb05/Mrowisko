@@ -1,41 +1,50 @@
-1. Tytuł: 
+==== 1. Tytuł: ====
     Mrowisko
 
-2. Dane studentów: 
+==== 2. Dane studentów: ====
     Maciej Bielech, Agnieszka Zadworny, 3 rok, Informatyka, grupa 3a
 
-3. Data oddania: 
+==== 3. Data oddania: ====
     15.01.19r.
 
-4. Cel programu:  
+==== 4. Cel programu: ====
     Zobrazowanie cyklu dojrzewania mrówki, 
     funkcjonowania czynności życiowych i
     życia codziennego mrówek.
 
-5. Opis i schemat struktury zadaniowej programu
+==== 5. Opis i schemat struktury zadaniowej programu ====
+    Każda z mrówek jest osobnym zadaniem.
+    Występuje również zadanie Przebieg, które jest głównym zadaniem
+    symulującym upływ czasu i wyświetlającym zmiany na ekranie.
+    Zadanie Przebieg ma 3 wejścia:
+    * Kradziez - służące do symulacji kradzieży 100 jednostek pożywienia,
+    * Pracujemy - służące do symulacji zwiększenia energetycznego spalania
+                    mrówek podczas pracy,
+    * NowaMrowka - służące do symulacji złożenia nowego jajka.
 
-6. Informacje o stosowanych pakietach zewnętrznych
+==== 6. Informacje o stosowanych pakietach zewnętrznych ====
     Nie użyto pakietów zewnętrznych.
 
-7. Informacje o zastosowaniu specyficznych metod rozwiązania problemu
+==== 7. Informacje o zastosowaniu specyficznych metod rozwiązania problemu ====
     Mrówka: zadanie
     Dostęp mrówek do jedzenia: semafor
     Dostęp mrówek do spania: semafor (tylko 20% mrówek może spać)
 
-8. Krótka instrukcja obsługi
+==== 8. Krótka instrukcja obsługi ====
     Uruchamiamy program, aby przerwać jego działanie klikamy q lub Q.
 
-9. Testy, przykłady
+==== 9. Testy, przykłady ====
+    Tu trzeba wkleić pare przykładów podczas i pod koniec działania symulacji.
 
-10. Możliwe rozszerzenia programu
-    GUI,
-    Możliwość wpływu na parametry symulacji,
-    Przyciski do przerywania i uruchamiania symulacji.
+==== 10. Możliwe rozszerzenia programu ====
+    * GUI,
+    * Możliwość wpływu na parametry symulacji,
+    * Przyciski do przerywania i uruchamiania symulacji.
 
-11. Ograniczenia programu np. maksymalna liczba obsługiwanych plików, max. czas symulacji itp.
+==== 11. Ograniczenia programu np. maksymalna liczba obsługiwanych plików, max. czas symulacji itp. ====
     Nie wyróżniamy ograniczeń
 
-12. Inne informacje zależne od tematu.
+==== 12. Inne informacje zależne od tematu. ====
 
 Robotnice żyją sześć miesięcy, po czym umierają ze starości.
 

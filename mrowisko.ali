@@ -31,7 +31,7 @@ RV MAX_TASK_ENTRIES=3
 RV MAX_TASKS=1+
 RV MAX_ENTRY_QUEUE_LENGTH=1+
 
-U panel%b		panel.adb		d5848eb2 NE OO SU
+U mrowisko%b		mrowisko.adb		9331b11c NE OO SU
 W ada%s			ada.ads			ada.ali
 W ada.calendar%s	a-calend.adb		a-calend.ali
 Z ada.calendar.delays%s	a-caldel.adb		a-caldel.ali
@@ -85,7 +85,7 @@ D a-unccon.ads		20170908151217 0e9b276f ada.unchecked_conversion%s
 D interfac.ads		20180111085525 5ab55268 interfaces%s
 D i-c.ads		20170908151217 5421119b interfaces.c%s
 D i-cstrea.ads		20180111085525 e53d8b8e interfaces.c_streams%s
-D panel.adb		20190108214006 b8d391ca panel%b
+D mrowisko.adb		20190108214723 fe66ae64 mrowisko%b
 D system.ads		20180111085525 4635ec04 system%s
 D s-atacco.ads		20180111085525 4c36d12f system.address_to_access_conversions%s
 D s-conca2.ads		20180111085525 02a0d7d0 system.concat_2%s
@@ -160,8 +160,8 @@ X 18 a-textio.ads
 263U14*Put_Line 24|723s9 724s9
 X 19 a-tiflio.ads
 68U14*Put 24|72s7[8|20]
-X 24 panel.adb
-25U11*Panel 25b11 744l5 744t10
+X 24 mrowisko.adb
+25U11*Mrowisko 25b11 744l5 744t13
 27b3 Koniec{boolean} 717r17 743m3
 29E8 Atrybuty 29e74 32r57 38r37 45r32 53r57 66r37
 29n21 Czysty{29E8} 48r56 683r43 685r43 687r43 689r43 691r43 693r43 695r43

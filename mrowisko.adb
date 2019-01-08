@@ -22,7 +22,7 @@ use Ada.Strings.Fixed;
 with Ada.Exceptions;
 use Ada.Exceptions;
 
-procedure Panel is
+procedure Mrowisko is
   
   Koniec : Boolean := False with Atomic;
   
@@ -672,7 +672,7 @@ procedure Panel is
         null;
       end select;
 
-      if Licznik <= 10
+      if Licznik <= 30
       then
         Mrowki(Licznik).Start;
         Licznik := Licznik + 1;
@@ -741,4 +741,4 @@ begin
     end if;
   end loop; 
   Koniec := True;
-end Panel;    
+end Mrowisko;    
