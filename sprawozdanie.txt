@@ -5,6 +5,7 @@
     Maciej Bielech, Agnieszka Zadworny, 3 rok, Informatyka, grupa 3a
 
 3. Data oddania: 
+    15.01.19r.
 
 4. Cel programu:  
     Zobrazowanie cyklu dojrzewania mrówki, 
@@ -14,23 +15,35 @@
 5. Opis i schemat struktury zadaniowej programu
 
 6. Informacje o stosowanych pakietach zewnętrznych
+    Nie użyto pakietów zewnętrznych.
 
 7. Informacje o zastosowaniu specyficznych metod rozwiązania problemu
+    Mrówka: zadanie
+    Dostęp mrówek do jedzenia: semafor
+    Dostęp mrówek do spania: semafor (tylko 20% mrówek może spać)
 
 8. Krótka instrukcja obsługi
+    Uruchamiamy program, aby przerwać jego działanie klikamy q lub Q.
 
 9. Testy, przykłady
 
 10. Możliwe rozszerzenia programu
-    GUI
+    GUI,
+    Dodawanie niestandardowych sytuacji: jak susza, czy powódź,
+    Zegar zliczający czas,
+    Możliwość wpływu na parametry symulacji,
+    Przyciski do przerywania i uruchamiania symulacji.
 
 11. Ograniczenia programu np. maksymalna liczba obsługiwanych plików, max. czas symulacji itp.
+    Nie wyróżniamy ograniczeń
 
 12. Inne informacje zależne od tematu.
-Dlatego inaczej odpoczywają, czyli śpią robotnice, a inaczej królowe. Te ostatnie, jako absolutnie niezbędne dla całej mrówczej społeczności, dożywają czasem nawet sześciu lat, gdy tymczasem robotnice żyją sześć miesięcy, po czym umierają ze starości. Robotnice zasypiają w nieregularnych odstępach czasu i nie wszystkie jednocześnie, dzięki czemu w każdej chwili w ciągu doby czuwało i było aktywnych 80% z nich, co zaspokajało potrzeby mrowiskowego domu.
 
+Robotnice żyją sześć miesięcy, po czym umierają ze starości.
 
-Typowa robotnica zasypia 250 razy na dobę na około ponad minutę, co oznacza, że odpoczywa około 2 godzin i 48 minut. W przypadku królowych sen ich jest głęboki i długi – około dziewięciu godzin na dobę, a na dodatek zsynchronizowany ze snem innych królowych (u mrówek ognistych może być ich wiele). Gdy jedna śpi, to inne czuwają.
+Robotnice zasypiają w nieregularnych odstępach czasu i nie wszystkie jednocześnie, 
+dzięki czemu w każdej chwili w ciągu doby czuwało i było aktywnych 80% z nich, 
+co zaspokajało potrzeby mrowiskowego domu.
 
-
-Królewska drzemka trwa 6 minut z częściowo podniesionymi czułkami i rozwartymi żuwaczkami. Gdy śpią głęboko, zwierają je, a ruchy czułków wskazują, że mogą mieć nawet marzenia senne.
+Typowa robotnica zasypia 250 razy na dobę na około ponad minutę, co oznacza, 
+że odpoczywa około 2 godzin i 48 minut.

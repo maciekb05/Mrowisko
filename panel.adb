@@ -88,24 +88,36 @@ procedure Panel is
       Ekran.Pisz_XY(3,6,"Ilość poczwarek =");
       Ekran.Pisz_XY(3,7,"Ilość imago =");
       Ekran.Pisz_XY(3,8,"Ilość starych =");
-      Ekran.Pisz_XY(3,9,"Ilość jedzenia =");
+      Ekran.Pisz_XY(3,9,"Ilość trupów =");
 
-      Ekran.Pisz_XY(3,11,"Ilość pracujacych =");
-      Ekran.Pisz_XY(3,12,"Ilość śpiących =");
-      Ekran.Pisz_XY(3,13,"Ilość jedzących =");
-      Ekran.Pisz_XY(3,14,"Ilość czekających =");
+      Ekran.Pisz_XY(3,11,"Ilość jedzenia =");
+
+      Ekran.Pisz_XY(3,13,"Ilość pracujacych =");
+      Ekran.Pisz_XY(3,14,"Ilość śpiących =");
+      Ekran.Pisz_XY(3,15,"Ilość jedzących =");
+      Ekran.Pisz_XY(3,16,"Ilość czekających =");
+      Ekran.Pisz_XY(3,17,"Ilość rozmnazajacych =");
+
+
+      Ekran.Pisz_XY(3,18,"Czas (sekundy):");
+      Ekran.Pisz_XY(3,20,"Koniec - q, Kradziez 100 grzybow - k, Ciezsza praca - c");
       
     end Tlo; 
         
   end Ekran;
   
-  task Przebieg;
+  task Przebieg is
+    entry Kradziez;
+    entry Pracujemy;
+    entry NowaMrowka;
+  end Przebieg;
 
-  task body Przebieg is
-    use Ada.Numerics.Float_Random;
-    
+  task body Przebieg is 
+
+    Tick : Integer := 0;
+
     Nastepny     : Ada.Calendar.Time;
-    Okres        : constant Duration := 0.99; -- sekundy
+    Okres        : constant Duration := 1.0; -- sekundy
     Przesuniecie : constant Duration := 0.5;
     
     IloscMrowek : Integer := 0 with Atomic;
@@ -114,16 +126,29 @@ procedure Panel is
     IloscMrowekPoczwarka : Integer := 0 with Atomic;
     IloscMrowekImago : Integer := 0 with Atomic;
     IloscMrowekStara : Integer := 0 with Atomic;
+    IloscTrupow : Integer := 0 with Atomic;
 
     IloscSpiacychMrowek : Integer := 0 with Atomic;
     IloscJedzacychMrowek : Integer := 0 with Atomic;
     IloscCzekajacychMrowek : Integer := 0 with Atomic;
     IloscPracujacychMrowek : Integer := 0 with Atomic;
+    IloscSkladajacychJaja : Integer := 0 with Atomic;
 
     IloscJedzenia : Integer := 0 with Atomic;
+    CiezkoscPracy : Integer := 20 with Atomic;
+
+    procedure UkradnijZarcie is
+    begin
+      IloscJedzenia := IloscJedzenia - 100;
+    end UkradnijZarcie;
+
+    procedure CiezkaPraca is
+    begin
+      CiezkoscPracy := CiezkoscPracy + 10;
+    end CiezkaPraca;
 
     type StanMrowki is (Jajko, Larwa, Poczwarka, Imago, Stara);
-    type CzynnosciMrowki is (Praca, Jedzenie, Spanie, Czekanie);
+    type CzynnosciMrowki is (Praca, Jedzenie, Spanie, Czekanie, SkadanieJaj);
 
     protected SemaforJedzenia is
         entry Czekaj;
@@ -169,6 +194,10 @@ procedure Panel is
     end Mrowka;
 
     task body Mrowka is
+      use Ada.Numerics.Float_Random;
+
+      Gen : Generator;
+
       Energia : Integer := 100;
       PoziomNajedzenia : Integer := 100;
       Czynnosc : CzynnosciMrowki := Czekanie;
@@ -181,8 +210,20 @@ procedure Panel is
       Stan : StanMrowki := Jajko;
       NastepnyM     : Ada.Calendar.Time;
       OkresM        : constant Duration := 3.0; -- sekundy
-      PrzesuniecieM : constant Duration := 0.5;
+      PrzesuniecieM : constant Duration := 0.4;
+
+      procedure PorzucPoprzedniaCzynnosc is begin
+        case Czynnosc is
+          when Praca => IloscPracujacychMrowek := IloscPracujacychMrowek - 1;
+          when Jedzenie => IloscJedzacychMrowek := IloscJedzacychMrowek - 1;
+          when Spanie => IloscSpiacychMrowek := IloscSpiacychMrowek - 1;
+          when Czekanie => IloscCzekajacychMrowek := IloscCzekajacychMrowek - 1;
+          when SkadanieJaj => IloscSkladajacychJaja := IloscSkladajacychJaja - 1;
+        end case;
+      end PorzucPoprzedniaCzynnosc;
+
     begin
+      Reset(Gen);
       accept Start;
       IloscMrowek := IloscMrowek + 1;
       IloscMrowekJajko := IloscMrowekJajko + 1;
@@ -212,37 +253,29 @@ procedure Panel is
          when 32 =>
           IloscMrowek := IloscMrowek - 1;
           IloscMrowekStara := IloscMrowekStara - 1;
-          case Czynnosc is
-            when Praca => IloscPracujacychMrowek := IloscPracujacychMrowek - 1;
-            when Jedzenie => IloscJedzacychMrowek := IloscJedzacychMrowek - 1;
-            when Spanie => IloscSpiacychMrowek := IloscSpiacychMrowek - 1;
-            when Czekanie => IloscCzekajacychMrowek := IloscCzekajacychMrowek - 1;
-          end case;
+          IloscTrupow := IloscTrupow + 1;
+          
+          PorzucPoprzedniaCzynnosc;
+
           exit;
          when others => null; 
         end case;
 
-        
 
         if Stan = Imago or else Stan = Stara
         then
 
-          case Czynnosc is
-            when Praca => IloscPracujacychMrowek := IloscPracujacychMrowek - 1;
-            when Jedzenie => IloscJedzacychMrowek := IloscJedzacychMrowek - 1;
-            when Spanie => IloscSpiacychMrowek := IloscSpiacychMrowek - 1;
-            when Czekanie => IloscCzekajacychMrowek := IloscCzekajacychMrowek - 1;
-          end case;
-
           if PoziomNajedzenia <= 0 or else Energia <= 0
           then
             IloscMrowek := IloscMrowek - 1;
+            IloscTrupow := IloscTrupow + 1;
             if Wiek >= 16
             then 
               IloscMrowekStara := IloscMrowekStara - 1;
             else
               IloscMrowekImago := IloscMrowekImago - 1;
             end if;
+            PorzucPoprzedniaCzynnosc;
             exit;
           end if;
 
@@ -251,6 +284,7 @@ procedure Panel is
             SemaforSpania.Czekaj;
               if Float(IloscSpiacychMrowek) / Float(IloscMrowek) < 0.2
               then
+                PorzucPoprzedniaCzynnosc;
                 Czynnosc := Spanie;
                 IloscSpiacychMrowek := IloscSpiacychMrowek + 1;
                 Energia := Energia + 80;
@@ -267,8 +301,9 @@ procedure Panel is
           if PoziomNajedzenia < 21 and then ZmienilemStan = false
           then
             SemaforJedzenia.Czekaj;
-              if IloscJedzenia > 0
+              if IloscJedzenia > 5
               then
+                PorzucPoprzedniaCzynnosc;
                 Czynnosc := Jedzenie;
                 IloscJedzacychMrowek := IloscJedzacychMrowek + 1;
                 PoziomNajedzenia := PoziomNajedzenia + 50;
@@ -287,14 +322,23 @@ procedure Panel is
           then
             if CzekamNaJedzenie = true or else CzekamNaSpanie = true 
             then
+              PorzucPoprzedniaCzynnosc;
               Czynnosc := Czekanie;
               IloscCzekajacychMrowek := IloscCzekajacychMrowek + 1;
               Energia := Energia - 3;
               PoziomNajedzenia := PoziomNajedzenia - 5;
-            else 
+            elsif Random(Gen) < 0.08 then
+              PorzucPoprzedniaCzynnosc;
+              Czynnosc := SkadanieJaj;
+              IloscSkladajacychJaja := IloscSkladajacychJaja + 1;
+              Energia := Energia - 5;
+              PoziomNajedzenia := PoziomNajedzenia - 10;
+              Przebieg.NowaMrowka;
+            else
+              PorzucPoprzedniaCzynnosc;
               Czynnosc := Praca;
               IloscPracujacychMrowek := IloscPracujacychMrowek + 1;
-              Energia := Energia - 20;
+              Energia := Energia - CiezkoscPracy;
               PoziomNajedzenia := PoziomNajedzenia - 30;
               IloscJedzenia := IloscJedzenia + 3;
             end if;
@@ -312,22 +356,45 @@ procedure Panel is
       end loop;
     end Mrowka;
 
-    MaksymalnaIloscMrowek : Integer := 10;
+    MaksymalnaIloscMrowek : Integer := 100;
 
     subtype Zakres is Integer range 1..MaksymalnaIloscMrowek; 
     Mrowki : array(Zakres) of Mrowka;
 
-    Licznik : Integer := 1;
-
+    Licznik : Integer := 1 with Atomic;
   begin
+    
     Nastepny := Clock + Przesuniecie;
     loop
       delay until Nastepny;
-      if Licznik <= MaksymalnaIloscMrowek
+
+      select
+        accept Kradziez do
+          UkradnijZarcie;
+        end Kradziez;
+      or
+        accept Pracujemy do
+          CiezkaPraca;
+        end Pracujemy;
+      or
+        accept NowaMrowka do
+          if Licznik <= MaksymalnaIloscMrowek
+          then
+            Mrowki(Licznik).Start;
+            Licznik := Licznik + 1;
+          end if;
+        end NowaMrowka;
+      else
+        null;
+      end select;
+
+      if Licznik <= 10
       then
         Mrowki(Licznik).Start;
         Licznik := Licznik + 1;
       end if;
+
+      Tick := Tick + 1;
 
       Ekran.Pisz_XY(21 ,3, 20*' ', Atryb=>Czysty);
       Ekran.Pisz_XY(21, 3, IloscMrowek'Img, Atryb=>Negatyw);
@@ -342,16 +409,26 @@ procedure Panel is
       Ekran.Pisz_XY(21 ,8, 20*' ', Atryb=>Czysty);
       Ekran.Pisz_XY(21, 8, IloscMrowekStara'Img, Atryb=>Negatyw);
       Ekran.Pisz_XY(21 ,9, 20*' ', Atryb=>Czysty);
-      Ekran.Pisz_XY(21, 9, IloscJedzenia'Img, Atryb=>Negatyw);
+      Ekran.Pisz_XY(21, 9, IloscTrupow'Img, Atryb=>Negatyw);
 
-      Ekran.Pisz_XY(28 ,11, 20*' ', Atryb=>Czysty);
-      Ekran.Pisz_XY(28, 11, IloscPracujacychMrowek'Img, Atryb=>Negatyw);
-      Ekran.Pisz_XY(28 ,12, 20*' ', Atryb=>Czysty);
-      Ekran.Pisz_XY(28, 12, IloscSpiacychMrowek'Img, Atryb=>Negatyw);
+
+      Ekran.Pisz_XY(21 ,11, 20*' ', Atryb=>Czysty);
+      Ekran.Pisz_XY(21, 11, IloscJedzenia'Img, Atryb=>Negatyw);
+
       Ekran.Pisz_XY(28 ,13, 20*' ', Atryb=>Czysty);
-      Ekran.Pisz_XY(28, 13, IloscJedzacychMrowek'Img, Atryb=>Negatyw);
+      Ekran.Pisz_XY(28, 13, IloscPracujacychMrowek'Img, Atryb=>Negatyw);
       Ekran.Pisz_XY(28 ,14, 20*' ', Atryb=>Czysty);
-      Ekran.Pisz_XY(28, 14, IloscCzekajacychMrowek'Img, Atryb=>Negatyw);
+      Ekran.Pisz_XY(28, 14, IloscSpiacychMrowek'Img, Atryb=>Negatyw);
+      Ekran.Pisz_XY(28 ,15, 20*' ', Atryb=>Czysty);
+      Ekran.Pisz_XY(28, 15, IloscJedzacychMrowek'Img, Atryb=>Negatyw);
+      Ekran.Pisz_XY(28 ,16, 20*' ', Atryb=>Czysty);
+      Ekran.Pisz_XY(28, 16, IloscCzekajacychMrowek'Img, Atryb=>Negatyw);
+      Ekran.Pisz_XY(28 ,17, 20*' ', Atryb=>Czysty);
+      Ekran.Pisz_XY(28, 17, IloscSkladajacychJaja'Img, Atryb=>Negatyw);
+
+
+      Ekran.Pisz_XY(21 ,18, 20*' ', Atryb=>Czysty);
+      Ekran.Pisz_XY(21, 18, Tick'Img, Atryb=>Negatyw);
 
       exit when Koniec;
       Nastepny := Nastepny + Okres;
@@ -371,6 +448,13 @@ begin
   loop
     Get_Immediate(Zn);
     exit when Zn in 'q'|'Q';
+    if Zn in 'K'|'k' 
+    then 
+      Przebieg.Kradziez;
+    elsif Zn in 'C' | 'c'
+    then 
+      Przebieg.Pracujemy;
+    end if;
   end loop; 
   Koniec := True;
 end Panel;    
