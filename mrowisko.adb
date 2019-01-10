@@ -9,6 +9,8 @@ with Ada.Text_IO;
 use Ada.Text_IO;
 with Ada.Float_Text_IO;
 use Ada.Float_Text_IO;
+with Ada.Integer_Text_IO; 
+use Ada.Integer_Text_IO;
 
 with Ada.Calendar;
 use Ada.Calendar;
@@ -24,6 +26,7 @@ use Ada.Exceptions;
 
 procedure Mrowisko is
   
+  PoczatkowaIloscMrowek : Integer := 0;
   Koniec : Boolean := False with Atomic;
   
   type Atrybuty is (Czysty, Jasny, Podkreslony, Negatyw, Migajacy, Szary);
@@ -110,6 +113,7 @@ procedure Mrowisko is
     entry Kradziez;
     entry Pracujemy;
     entry NowaMrowka;
+    entry Start;
   end Przebieg;
 
   task body Przebieg is 
@@ -150,14 +154,14 @@ procedure Mrowisko is
     type StanMrowki is (Jajko, Larwa, Poczwarka, Imago, Stara);
     type CzynnosciMrowki is (Praca, Jedzenie, Spanie, Czekanie, SkadanieJaj);
 
-    protected SemaforJedzenia is
+    protected type Semafor is
         entry Czekaj;
         procedure Sygnalizuj;
     private
         Sem : Boolean := True;
-    end SemaforJedzenia;
+    end Semafor;
 
-    protected body SemaforJedzenia is
+    protected body Semafor is
         entry Czekaj when Sem is
         begin
             Sem := False;
@@ -167,254 +171,35 @@ procedure Mrowisko is
         begin
             Sem := True;
         end Sygnalizuj;
-    end SemaforJedzenia;
+    end Semafor;
 
-    protected SemaforSpania is
-        entry Czekaj;
-        procedure Sygnalizuj;
-    private
-        Sem : Boolean := True;
-    end SemaforSpania;
+    SemaforJedzenia : Semafor;
 
-    protected body SemaforSpania is
-        entry Czekaj when Sem is
-        begin
-            Sem := False;
-        end Czekaj;
+    SemaforSpania : Semafor;
 
-        procedure Sygnalizuj is
-        begin
-            Sem := True;
-        end Sygnalizuj;
-    end SemaforSpania;
+    SemaforIlosciPracujacych : Semafor;
 
-    protected SemaforIlosciPracujacych is
-        entry Czekaj;
-        procedure Sygnalizuj;
-    private
-        Sem : Boolean := True;
-    end SemaforIlosciPracujacych;
+    SemaforIlosciSpiacych : Semafor;
 
-    protected body SemaforIlosciPracujacych is
-        entry Czekaj when Sem is
-        begin
-            Sem := False;
-        end Czekaj;
+    SemaforIlosciJedzacych : Semafor;
 
-        procedure Sygnalizuj is
-        begin
-            Sem := True;
-        end Sygnalizuj;
-    end SemaforIlosciPracujacych;
+    SemaforIlosciCzekajacych : Semafor;
 
-    protected SemaforIlosciSpiacych is
-        entry Czekaj;
-        procedure Sygnalizuj;
-    private
-        Sem : Boolean := True;
-    end SemaforIlosciSpiacych;
+    SemaforIlosciRozmnazajacych : Semafor;
 
-    protected body SemaforIlosciSpiacych is
-        entry Czekaj when Sem is
-        begin
-            Sem := False;
-        end Czekaj;
+    SemaforMrowek : Semafor;
 
-        procedure Sygnalizuj is
-        begin
-            Sem := True;
-        end Sygnalizuj;
-    end SemaforIlosciSpiacych;
+    SemaforJajek : Semafor;
 
-    protected SemaforIlosciJedzacych is
-        entry Czekaj;
-        procedure Sygnalizuj;
-    private
-        Sem : Boolean := True;
-    end SemaforIlosciJedzacych;
+    SemaforLarw : Semafor;
 
-    protected body SemaforIlosciJedzacych is
-        entry Czekaj when Sem is
-        begin
-            Sem := False;
-        end Czekaj;
+    SemaforPoczwarek : Semafor;
 
-        procedure Sygnalizuj is
-        begin
-            Sem := True;
-        end Sygnalizuj;
-    end SemaforIlosciJedzacych;
-
-    protected SemaforIlosciCzekajacych is
-        entry Czekaj;
-        procedure Sygnalizuj;
-    private
-        Sem : Boolean := True;
-    end SemaforIlosciCzekajacych;
-
-    protected body SemaforIlosciCzekajacych is
-        entry Czekaj when Sem is
-        begin
-            Sem := False;
-        end Czekaj;
-
-        procedure Sygnalizuj is
-        begin
-            Sem := True;
-        end Sygnalizuj;
-    end SemaforIlosciCzekajacych;
-
-    protected SemaforIlosciRozmnazajacych is
-        entry Czekaj;
-        procedure Sygnalizuj;
-    private
-        Sem : Boolean := True;
-    end SemaforIlosciRozmnazajacych;
-
-    protected body SemaforIlosciRozmnazajacych is
-        entry Czekaj when Sem is
-        begin
-            Sem := False;
-        end Czekaj;
-
-        procedure Sygnalizuj is
-        begin
-            Sem := True;
-        end Sygnalizuj;
-    end SemaforIlosciRozmnazajacych;
-
-    protected SemaforMrowek is
-        entry Czekaj;
-        procedure Sygnalizuj;
-    private
-        Sem : Boolean := True;
-    end SemaforMrowek;
-
-    protected body SemaforMrowek is
-        entry Czekaj when Sem is
-        begin
-            Sem := False;
-        end Czekaj;
-
-        procedure Sygnalizuj is
-        begin
-            Sem := True;
-        end Sygnalizuj;
-    end SemaforMrowek;
-
-    protected SemaforJajek is
-        entry Czekaj;
-        procedure Sygnalizuj;
-    private
-        Sem : Boolean := True;
-    end SemaforJajek;
-
-    protected body SemaforJajek is
-        entry Czekaj when Sem is
-        begin
-            Sem := False;
-        end Czekaj;
-
-        procedure Sygnalizuj is
-        begin
-            Sem := True;
-        end Sygnalizuj;
-    end SemaforJajek;
-
-    protected SemaforLarw is
-        entry Czekaj;
-        procedure Sygnalizuj;
-    private
-        Sem : Boolean := True;
-    end SemaforLarw;
-
-    protected body SemaforLarw is
-        entry Czekaj when Sem is
-        begin
-            Sem := False;
-        end Czekaj;
-
-        procedure Sygnalizuj is
-        begin
-            Sem := True;
-        end Sygnalizuj;
-    end SemaforLarw;
-
-    protected SemaforPoczwarek is
-        entry Czekaj;
-        procedure Sygnalizuj;
-    private
-        Sem : Boolean := True;
-    end SemaforPoczwarek;
-
-    protected body SemaforPoczwarek is
-        entry Czekaj when Sem is
-        begin
-            Sem := False;
-        end Czekaj;
-
-        procedure Sygnalizuj is
-        begin
-            Sem := True;
-        end Sygnalizuj;
-    end SemaforPoczwarek;
-
-    protected SemaforImago is
-        entry Czekaj;
-        procedure Sygnalizuj;
-    private
-        Sem : Boolean := True;
-    end SemaforImago;
-
-    protected body SemaforImago is
-        entry Czekaj when Sem is
-        begin
-            Sem := False;
-        end Czekaj;
-
-        procedure Sygnalizuj is
-        begin
-            Sem := True;
-        end Sygnalizuj;
-    end SemaforImago;
+    SemaforImago : Semafor;
     
-    protected SemaforStarych is
-        entry Czekaj;
-        procedure Sygnalizuj;
-    private
-        Sem : Boolean := True;
-    end SemaforStarych;
+    SemaforStarych : Semafor;
 
-    protected body SemaforStarych is
-        entry Czekaj when Sem is
-        begin
-            Sem := False;
-        end Czekaj;
-
-        procedure Sygnalizuj is
-        begin
-            Sem := True;
-        end Sygnalizuj;
-    end SemaforStarych;
-
-    protected SemaforTrupow is
-        entry Czekaj;
-        procedure Sygnalizuj;
-    private
-        Sem : Boolean := True;
-    end SemaforTrupow;
-
-    protected body SemaforTrupow is
-        entry Czekaj when Sem is
-        begin
-            Sem := False;
-        end Czekaj;
-
-        procedure Sygnalizuj is
-        begin
-            Sem := True;
-        end Sygnalizuj;
-    end SemaforTrupow;
+    SemaforTrupow : Semafor;
 
     task type Mrowka is
       entry Start;	
@@ -646,8 +431,10 @@ procedure Mrowisko is
     Mrowki : array(Zakres) of Mrowka;
 
     Licznik : Integer := 1 with Atomic;
+
   begin
-    
+    accept Start;
+
     Nastepny := Clock + Przesuniecie;
     loop
       delay until Nastepny;
@@ -672,7 +459,7 @@ procedure Mrowisko is
         null;
       end select;
 
-      if Licznik <= 30
+      if Licznik <= PoczatkowaIloscMrowek
       then
         Mrowki(Licznik).Start;
         Licznik := Licznik + 1;
@@ -728,6 +515,13 @@ procedure Mrowisko is
   
 begin
   -- inicjowanie
+
+    Put_Line("");
+    Put_Line("Podaj ilosc mrowek: ");
+    Get(PoczatkowaIloscMrowek);
+
+    Przebieg.Start;
+    
   Ekran.Tlo; 
   loop
     Get_Immediate(Zn);
