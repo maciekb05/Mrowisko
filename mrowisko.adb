@@ -27,6 +27,9 @@ use Ada.Exceptions;
 procedure Mrowisko is
   
   PoczatkowaIloscMrowek : Integer := 0;
+  MaksymalnaIloscMrowek : Integer := 1000;
+  IloscJedzenia : Integer := 0 with Atomic;
+
   Koniec : Boolean := False with Atomic;
   
   type Atrybuty is (Czysty, Jasny, Podkreslony, Negatyw, Migajacy, Szary);
@@ -85,7 +88,7 @@ procedure Mrowisko is
     begin
       Ekran.Czysc;
       Ekran.Pisz_XY(1,1,"+=========== Mrowisko ===========+");
-      Ekran.Pisz_XY(3,3,"Ilość ogółem =");
+      Ekran.Pisz_XY(3,3,"Ilość żyjących =");
       Ekran.Pisz_XY(3,4,"Ilość jajek =");
       Ekran.Pisz_XY(3,5,"Ilość larw =");
       Ekran.Pisz_XY(3,6,"Ilość poczwarek =");
@@ -138,7 +141,7 @@ procedure Mrowisko is
     IloscPracujacychMrowek : Integer := 0 with Atomic;
     IloscSkladajacychJaja : Integer := 0 with Atomic;
 
-    IloscJedzenia : Integer := 0 with Atomic;
+    
     CiezkoscPracy : Integer := 20 with Atomic;
 
     procedure UkradnijZarcie is
@@ -222,7 +225,7 @@ procedure Mrowisko is
       Stan : StanMrowki := Jajko;
       NastepnyM     : Ada.Calendar.Time;
       OkresM        : constant Duration := 3.0; -- sekundy
-      PrzesuniecieM : constant Duration := 0.4;
+      PrzesuniecieM : Duration := 0.4;
 
       procedure PorzucPoprzedniaCzynnosc is begin
         case Czynnosc is
@@ -251,6 +254,9 @@ procedure Mrowisko is
 
     begin
       Reset(Gen);
+
+      PrzesuniecieM := PrzesuniecieM + Duration(Random(Gen)); -- rozrzucenie przesuniecia
+
       accept Start;
       SemaforMrowek.Czekaj;
       IloscMrowek := IloscMrowek + 1;
@@ -392,7 +398,7 @@ procedure Mrowisko is
               SemaforIlosciCzekajacych.Sygnalizuj;
               Energia := Energia - 3;
               PoziomNajedzenia := PoziomNajedzenia - 5;
-            elsif Random(Gen) < 0.08 then
+            elsif Random(Gen) < 0.1 then
               PorzucPoprzedniaCzynnosc;
               Czynnosc := SkadanieJaj;
               SemaforIlosciRozmnazajacych.Czekaj;
@@ -409,7 +415,7 @@ procedure Mrowisko is
               SemaforIlosciPracujacych.Sygnalizuj;
               Energia := Energia - CiezkoscPracy;
               PoziomNajedzenia := PoziomNajedzenia - 30;
-              IloscJedzenia := IloscJedzenia + 3;
+              IloscJedzenia := IloscJedzenia + 2;
             end if;
           end if;
 
@@ -425,7 +431,7 @@ procedure Mrowisko is
       end loop;
     end Mrowka;
 
-    MaksymalnaIloscMrowek : Integer := 100;
+    
 
     subtype Zakres is Integer range 1..MaksymalnaIloscMrowek; 
     Mrowki : array(Zakres) of Mrowka;
@@ -517,11 +523,15 @@ begin
   -- inicjowanie
 
     Put_Line("");
-    Put_Line("Podaj ilosc mrowek: ");
+    Put_Line("Podaj poczatkowa ilosc mrowek: ");
     Get(PoczatkowaIloscMrowek);
+    Put_Line("Podaj maksymalna ilosc mrowek: ");
+    Get(MaksymalnaIloscMrowek);
+    Put_Line("Podaj poczatkowa ilosc jedzenia: ");
+    Get(IloscJedzenia);
 
     Przebieg.Start;
-    
+
   Ekran.Tlo; 
   loop
     Get_Immediate(Zn);
