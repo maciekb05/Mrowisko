@@ -32,6 +32,8 @@
 
 ==== 8. Krótka instrukcja obsługi ====
     Uruchamiamy program, aby przerwać jego działanie klikamy q lub Q.
+    Aby ukraść mrówkom 100 jednostek jedzenia klikamy k lub K,
+    aby włączyć tryb cięższej pracy mrówek (zużywają na nią więcej energii) klikamy c lub C.
 
 ==== 9. Testy, przykłady ====
     Tu trzeba wkleić pare przykładów podczas i pod koniec działania symulacji.
