@@ -10,7 +10,9 @@
 ==== 4. Cel programu: ====
     Zobrazowanie cyklu dojrzewania mrówki, 
     funkcjonowania czynności życiowych i
-    życia codziennego mrówek.
+    życia codziennego mrówek. Jednocześnie badany
+    w jaki sposów mrówki zareagują na różnego
+    rodzaju czynniki zewnętrzne.
 
 ==== 5. Opis i schemat struktury zadaniowej programu ====
     Każda z mrówek jest osobnym zadaniem.
@@ -21,6 +23,10 @@
     * Pracujemy - służące do symulacji zwiększenia energetycznego spalania
                     mrówek podczas pracy,
     * NowaMrowka - służące do symulacji złożenia nowego jajka.
+    Przed uruchomieniem symulacji użytkownik może modyfikować niektóre parametry takie jak:
+    * Maksymalną ilość mrówek,
+    * Początkową liczbę mrówek,
+    * Początkową ilość jedzenia w mrowisku,
 
 ==== 6. Informacje o stosowanych pakietach zewnętrznych ====
     Nie użyto pakietów zewnętrznych.
